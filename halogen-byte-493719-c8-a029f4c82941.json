@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "halogen-byte-493719-c8",
+  "private_key_id": "a029f4c829413e7ff3bb18e207450d27159554a4",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDF5w4okVcXzCTh\n9j1GeD0/rqnnB2caHNeeRA2m1jYYtO7QiwwWvGS8CX0K82bVtV3A+85hg2itLsKu\nb4UhRDnuZXJ5/TeihQgUO8LKCX9HghFnfLn4FvkFUb0UsSiiOPfVsdvQQNcOCOOP\nA+utOmAuTiHQPN6jMqYbBz2EPQsqTZG3I6ea1fKzUp4hKG4ksgnORp7r/ym0KclL\n/eYrjKfDDMJpzhCGEF2AxuZVq8rJ4bulzKovgQisxZ/lFcJzkWjnJxreAWhbIzkT\nGi8NL28ThbFzFThGbUQRKGBaFsFNd3zbO/WNYKAH7CcNm6ZiuS9BbPYGqyxcyiag\noKUMd8m9AgMBAAECggEAAUqrhzzBnIRm1jm49ymIPs7pSXp9JAi9qIkJrMXXpwwh\nReeubcSPhMGsGQLzMCBlqwGJvI2yxHSabTCJpiivlxx+5YhvUUZ8gcNNF2v98m3J\nJsuD3DhsKip5KTYpzXtBNNobFO4jaTJKJ/AO3PvVTmAQrO8Exfxp5KHEt0T9umox\nvniW/Kn3naKomYKQiQaxOsneQS/tMzwEBREyZMC4cir7CpZEq56eC+/kc2I+oAJf\nDI70woqLZVbr+l88kM0jOUGoMYNqJxDK+5kqVqLLr58Gcp6e3rXGDxiv8FVcTpTG\nhNlGJJY32ggQG9BJRHZXYDnP30rpkIgj8WSBf4XPCQKBgQD3b2bAmxIaRq5RcxO8\n0II440iUERHhBmYOl2sASeVSuwl67zjoE8l2Mqvt5P6bm+2u9TbutdhegikxJ8e7\n9Bst9lEczuJS+3Dp4anBHmO1UqX35cDxxEnVpwnrwDAuXY8FrTSWN6JDj40hcoZb\nZUDIW7mhqqs4W4xSAxUjU3+CJQKBgQDMwLr7fquW1FBfIcnbBMB+ybfYQBx7TbqZ\nlvgQjaYEJ1PMmar/hIINuZGvtYjSQ1nn7ODzSP/uUCAOzohD0cfoafMyxeR7k39o\n1+CusAZVaHi+s72dPWB3BUb7PzOLV2VWo04l0IPlhb0Mj+yyhzSSPzXjogBWfQEZ\nkg4KdU65uQKBgG2Vf/tzckwC27ck8SvhaJsLRhyVhsaTT+XMd84z7AV84pD4m8pk\n4QehH3YHwh9mqpie74o/LSmGGfo0NQhv7w2nFntcwO2hgHuEvurRq7Ulem3U6mPo\n3A5soT8w6eXO98W61RxmXU3wqL+Ueh7GNC/IN+l6rcQS/41e4iC4HTOlAoGABA++\npcZ5eOB1R63P5zxM5TbzIqMC7Z85GFraSNnGdUaibuiNb8wdGFCaBzY+pI0Zd3RH\ncgv8p6mHOUP3iADdSkrvvA4Y3iqq2FWP62cqeP89heri0/+nrjS4l7tFNnphVDqh\nDjb4ptDkUx93voLYFB6U3xMTlqOcJfmztZlmGmECgYEAu45CP7GXCEZLRrSGPClj\nFUldFVxbkClgar83Osixso107pcFjSY44BGcjWGDcjc62C58xaXuYSTig0FK5yhM\nY2HHEEZkMjYItYKcEetslLI4txwO1J0w0SlzdXfK/vg1hdKz4XK+rvUcdpqlhhIq\nMhnZPUKojHGODrQJTBDHkJc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "service-account@halogen-byte-493719-c8.iam.gserviceaccount.com",
+  "client_id": "112202376116078090843",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/service-account%40halogen-byte-493719-c8.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

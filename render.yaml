@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: zayavki-bot
+    runtime: docker
+    plan: free
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: ADMIN_ID
+        sync: false
+      - key: SHEET_ID
+        sync: false
+      - key: GOOGLE_CREDS_JSON
+        value: halogen-byte-493719-c8-a029f4c82941.json
+      - key: DATA_DIR
+        value: /app/data
+    disk:
+      name: data
+      mountPath: /app/data
+      sizeGB: 1
