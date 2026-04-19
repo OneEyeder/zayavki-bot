@@ -15,6 +15,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from dotenv import load_dotenv
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from aiohttp import web
 
 from database import (
     Application,
@@ -304,8 +305,18 @@ async def main() -> None:
     dp.message.register(on_text_message, F.text)
 
     await bot.delete_webhook(drop_pending_updates=True)
+
+    # HTTP server for Render Web Service (keeps the service awake)
+    async def health_check(request):
+        return web.Response(text="Bot is running!")
+
+    app = web.Application()
+    app.router.add_get("/", health_check)
+    app.router.add_get("/health", health_check)
+
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, "0.0.0.0", int(os.getenv("PORT", 8080)))
+    await site.start()
+
     await dp.start_polling(bot, polling_timeout=5)
-
-
-if __name__ == "__main__":
-    asyncio.run(main())

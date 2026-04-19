@@ -24,7 +24,7 @@
 
 **Вариант B: Вручную**
 
-1. В Dashboard нажми **New** → **Background Worker**
+1. В Dashboard нажми **New** → **Web Service**
 2. Подключи GitHub репозиторий
 3. Настройки:
    - **Name**: `zayavki-bot`
@@ -32,7 +32,7 @@
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `python main.py`
    - **Plan**: Free
-4. Нажми **Create Background Worker**
+4. Нажми **Create Web Service**
 
 ## Шаг 4: Настройка переменных окружения
 
