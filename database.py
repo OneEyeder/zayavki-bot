@@ -15,7 +15,7 @@ class Application:
     status: str = "new"
 
 
-# Для Render.com и других облачных платформ используем /app/data или текущую директорию
+# Для Render.com используем /app/data или текущую директорию
 DB_DIR = os.getenv("DATA_DIR", os.path.dirname(__file__))
 DB_PATH = os.path.join(DB_DIR, "applications.db")
 

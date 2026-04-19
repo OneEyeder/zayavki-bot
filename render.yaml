@@ -1,8 +1,10 @@
 services:
   - type: web
     name: zayavki-bot
-    runtime: docker
+    runtime: python
     plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
     envVars:
       - key: BOT_TOKEN
         sync: false
@@ -11,10 +13,7 @@ services:
       - key: SHEET_ID
         sync: false
       - key: GOOGLE_CREDS_JSON
-        value: halogen-byte-493719-c8-a029f4c82941.json
+        sync: false
       - key: DATA_DIR
-        value: /app/data
-    disk:
-      name: data
-      mountPath: /app/data
-      sizeGB: 1
+        value: /opt/render/project/src
+    autoDeploy: false

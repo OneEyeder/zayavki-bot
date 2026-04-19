@@ -1,119 +1,114 @@
-# Деплой на Render.com
+# Деплой на Render.com (Free Tier) — Native Python
 
-## Пошаговая инструкция
+**Docker не нужен!** Render запускает Python напрямую.
 
-### 1. Подготовка
+## Шаг 1: Подготовка
 
-Убедитесь, что у вас есть:
-- Аккаунт на [Render.com](https://render.com) (бесплатный)
-- Все файлы проекта готовы:
-  - `main.py` — основной код бота
-  - `database.py` — модуль SQLite
-  - `requirements.txt` — зависимости
-  - `Dockerfile` — конфигурация Docker
-  - `.dockerignore` — исключения для Docker
-  - `halogen-byte-493719-c8-a029f4c82941.json` — ключ Google Sheets
+Убедись, что файл создан:
+- `render.yaml` — конфигурация Render (free tier, native Python)
 
-### 2. Регистрация на Render.com
+## Шаг 2: Регистрация на Render
 
-1. Перейдите на https://render.com
-2. Нажмите "Get Started for Free"
-3. Зарегистрируйтесь через GitHub или email
+1. Перейди на https://render.com
+2. Зарегистрируйся через GitHub или email
+3. Подтверди email
 
-### 3. Создание Web Service
+## Шаг 3: Создание сервиса
 
-1. В Dashboard нажмите **"New +"** → **"Web Service"**
-2. Выберите способ деплоя:
-   - **Option A: Deploy from GitHub repo** (рекомендуется)
-     - Подключите GitHub
-     - Выберите репозиторий с проектом
-   - **Option B: Deploy from Docker image**
-     - Выполните шаги 4 и 5 локально, затем загрузите
+**Вариант A: Через Blueprint (render.yaml) — рекомендуется**
 
-### 4. Настройка Environment Variables
+1. Загрузи код на GitHub
+2. В Render Dashboard нажми **Blueprint**
+3. Подключи GitHub репозиторий `zayavki-bot`
+4. Render автоматически создаст сервис из `render.yaml`
 
-В Render Dashboard → ваш сервис → **Environment** добавьте:
+**Вариант B: Вручную**
+
+1. В Dashboard нажми **New** → **Web Service**
+2. Подключи GitHub репозиторий
+3. Настройки:
+   - **Name**: `zayavki-bot`
+   - **Runtime**: Python 3
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `python main.py`
+   - **Plan**: Free
+4. Нажми **Create Web Service**
+
+## Шаг 4: Настройка переменных окружения
+
+В разделе **Environment** добавь:
 
 ```
-BOT_TOKEN=8642122641:AAGTS6TDe2srWAOn3ZQXIbXR1eOfCdiZxnw
-ADMIN_ID=1023041853,1407010331,977618042
-SHEET_ID=1_s7oYGpUvR3QTMapZmRgDWQwECC1BggvnUQQcFTQnwo
-GOOGLE_CREDS_JSON=halogen-byte-493719-c8-a029f4c82941.json
-DATA_DIR=/app/data
+BOT_TOKEN=твой_токен_бота
+ADMIN_ID=id_админа_или_список_через_запятую
+SHEET_ID=id_google_таблицы
+GOOGLE_CREDS_JSON=/opt/render/project/src/google-creds.json
+DATA_DIR=/opt/render/project/src
 ```
 
-⚠️ **Важно**: Загрузите файл `halogen-byte-493719-c8-a029f4c82941.json` в корень проекта через:
-- Dashboard → Files (для загрузки секретов)
-- Или используйте Render Secrets (рекомендуется для production)
+**Важно**: 
+- Для Google ключей есть 2 варианта:
+  1. **Secret File**: Загрузи `halogen-byte-493719-c8-a029f4c82941.json` в разделе **Secret Files**, укажи путь
+  2. **Inline**: Скопируй содержимое JSON и вставь как значение `GOOGLE_CREDS_JSON` (если Render поддерживает)
 
-### 5. Настройка Build & Start
+## Шаг 5: Деплой
 
-В настройках сервиса:
+1. Нажми **Manual Deploy** → **Deploy latest commit**
+2. Жди сборки (1-2 минуты)
+3. Проверь логи в разделе **Logs**
 
-**Build Command:**
-```
-docker build -t bot .
-```
+## Шаг 6: Проверка работы
 
-**Start Command:**
-```
-docker run -p 10000:10000 bot
-```
+1. Напиши боту `/start`
+2. Проверь, что меню появляется
+3. Отправь тестовую заявку
+4. Проверь, что админ получил уведомление
 
-Или для Docker-опыта Render использует автоматически `Dockerfile`.
+## Проблемы и решения
 
-### 6. Запуск
+### Бот "засыпает" на free tier
 
-1. Нажмите **"Create Web Service"**
-2. Дождитесь билда (2-5 минут)
-3. Сервис автоматически запустится
+**Решение**: Используй UptimeRobot:
 
-### 7. Проверка логов
+1. Зарегистрируйся на https://uptimerobot.com
+2. Добавь мониторинг:
+   - **Type**: HTTP(s)
+   - **URL**: URL твоего сервиса на Render (взять из Dashboard)
+   - **Interval**: 5 минут (максимум для free)
+3. Это будет "будить" сервис каждые 5 минут
 
-Dashboard → ваш сервис → **Logs**
+### Ошибка подключения к Google Sheets
 
-Должно появиться:
-```
-[INFO] Bot started
-```
+Проверь:
+- Файл кредов загружен как Secret File
+- Переменная `GOOGLE_CREDS_JSON` указывает правильный путь
+- Права доступа к таблице настроены для service account
 
-### 8. Проверка работы
+### SQLite база на free tier
 
-- Отправьте `/start` боту
-- Проверьте, что заявки записываются в Google Sheets
-- Проверьте `/admin` для админов
+На free tier Render пересоздаёт окружение при каждом деплое. **База будет теряться!**
 
-## Важные моменты
+**Решения:**
+1. **Использовать PostgreSQL**: Render даёт бесплатный PostgreSQL
+2. **Загружать бэкап**: Делать экспорт данных перед деплоем
+3. **Google Sheets как основное хранилище**: Не критично если SQLite обнуляется
 
-### Бесплатный tier (Free)
-- Сервис "засыпает" после 15 минут без активности
-- При первом запросе просыпается (задержка 30-60 сек)
-- Для постоянной работы используйте cron-задачу (ping каждые 10 мин)
+Для простого бота — SQLite достаточно, просто имей в виду что данные сбросятся при деплое.
 
-### SQLite на Render
-- Файловая система эфемерная (при перезапуске данные сохраняются, но лучше бэкапить)
-- БД хранится в `/app/data/applications.db`
+## Обновление бота
 
-### Google Sheets на Render
-- Убедитесь, что таблица расшарена на `service-account@halogen-byte-493719-c8.iam.gserviceaccount.com`
-- Проверьте логи на ошибки `[ERROR] Google Sheets`
+1. Внеси изменения в код
+2. Закоммить и запушь на GitHub
+3. В Render Dashboard нажми **Manual Deploy** → **Deploy latest commit**
 
-## Альтернатива: GitHub → Render (лучший способ)
+## Полезные ссылки
 
-1. Загрузите код на GitHub (без `.env` и `applications.db`!)
-2. В Render: New → Web Service → Build and deploy from Git repository
-3. Укажите переменные окружения в Dashboard
-4. Render автоматически деплоит при push в main
+- Dashboard: https://dashboard.render.com
+- Документация: https://render.com/docs
 
-## Troubleshooting
+## Бесплатные ограничения
 
-**Ошибка: "chat not found"**
-- Админы должны написать боту `/start` хотя бы раз
-
-**Ошибка: Google Sheets не работает**
-- Проверьте, что файл `halogen-byte-493719-c8-a029f4c82941.json` загружен
-- Проверьте `SHEET_ID` и права доступа
-
-**Бот не отвечает**
-- Проверьте логи в Render Dashboard
-- Убедитесь, что `BOT_TOKEN` правильный
+- **Спящий режим**: После 15 минут бездействия
+- **Пробуждение**: ~30 секунд
+- **Лимит**: 750 часов/месяц
+- **База**: SQLite сбрасывается при деплое (см. выше)

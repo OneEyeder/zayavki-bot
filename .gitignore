@@ -12,3 +12,6 @@ build/
 .vscode/
 .idea/
 *.db
+# Google credentials
+*.json
+!render.yaml
