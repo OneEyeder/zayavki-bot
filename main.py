@@ -260,6 +260,9 @@ async def on_comment(message: Message, state: FSMContext) -> None:
     # Кэшируем для быстрого доступа
     APPLICATIONS_BY_ID[app.app_id] = app
 
+    # Очищаем состояние FSM после создания заявки
+    await state.clear()
+
     await message.answer(
         "Готово. Ваш комментарий:\n"
         f"{comment}\n\n"
