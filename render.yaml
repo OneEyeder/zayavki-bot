@@ -1,5 +1,5 @@
 services:
-  - type: web
+  - type: worker
     name: zayavki-bot
     runtime: python
     plan: free
