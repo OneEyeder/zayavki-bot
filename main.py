@@ -192,11 +192,15 @@ async def cmd_admin(message: Message, bot: Bot, admin_ids: List[int]) -> None:
 
 
 async def on_text_message(message: Message, state: FSMContext) -> None:
-    print(f"[DEBUG] on_text_message: {message.text}")
     if message.from_user is None or should_skip_update(message.from_user.id):
         return
     text = (message.text or "").strip()
     if not text:
+        return
+
+    # Если пользователь в процессе ввода комментария — игнорируем (пусть on_comment обработает)
+    current_state = await state.get_state()
+    if current_state == Form.comment:
         return
 
     if text == "Инструкция":
@@ -221,7 +225,11 @@ async def on_text_message(message: Message, state: FSMContext) -> None:
         )
         return
 
-    # Если не кнопка — игнорировать (или можно добавить обработчик для других текстов)
+    # Неизвестная команда — показываем подсказку
+    await message.answer(
+        "Используйте кнопки меню:",
+        reply_markup=build_main_menu(),
+    )
 
 
 async def on_admin_action(query: CallbackQuery, bot: Bot, admin_ids: List[int], dp: Dispatcher) -> None:
