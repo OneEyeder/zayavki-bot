@@ -304,7 +304,15 @@ async def main() -> None:
 
     dp.message.register(on_text_message, F.text)
 
+    # Check required environment variables
+    if not token:
+        print("ERROR: BOT_TOKEN not set!")
+        return
+    if not admin_ids:
+        print("WARNING: ADMIN_ID not set!")
+
     await bot.delete_webhook(drop_pending_updates=True)
+    print(f"Bot started. Admins: {admin_ids}")
 
     # HTTP server for Render Web Service (keeps the service awake)
     async def health_check(request):
@@ -316,7 +324,21 @@ async def main() -> None:
 
     runner = web.AppRunner(app)
     await runner.setup()
-    site = web.TCPSite(runner, "0.0.0.0", int(os.getenv("PORT", 8080)))
+    port = int(os.getenv("PORT", 8080))
+    site = web.TCPSite(runner, "0.0.0.0", port)
     await site.start()
+    print(f"HTTP server started on port {port}")
 
     await dp.start_polling(bot, polling_timeout=5)
+
+
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("Bot stopped by user")
+    except Exception as e:
+        print(f"FATAL ERROR: {e}")
+        import traceback
+        traceback.print_exc()
+        raise
